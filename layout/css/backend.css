@@ -1,0 +1,67 @@
+/*Start Main Rulez */
+
+body {
+	background-color: #fff;
+	font-size: 18px;
+}
+
+/*
+start login form
+*/
+.login {
+	width: 300px;
+	margin: 100px auto;
+
+}
+
+.login h4 {
+
+	color: #b7c8d2;
+}
+.login h4{
+		opacity: 0.5;
+
+}
+.login input {
+	margin-bottom: 10px;
+}
+
+.login .form-control {
+	background-color: #c1c8ce;
+}
+.login .btn{
+	background-color: #088bd6;
+}
+
+/* end login form*/
+
+/* Start BootStrab  Edits*/
+
+.navbar{
+	border-radius: 0;
+}
+.navbar-brand {
+	font-size:1em;
+}
+.dropdown-menu{
+	background-color: #1abc9c;
+	box-shadow:0 6px 12px rgb(93, 87, 156);
+
+}
+.navbar-expand-lg .navbar-collapse{
+}
+
+/* End BootStrab Edits*/
+   
+h1 {
+	font-size: 55px;
+	margin: 20px 0;
+	font-weight: bold;
+	color:#888;
+
+}
+   /* Start Member Page*/
+
+
+
+   /* Start Member Page*/
