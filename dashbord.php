@@ -8,7 +8,6 @@ if (isset($_SESSION['username'])){
 
    include 'int.php';
 
-print_r($_SESSION);
    include $tpl . 'footer.php' ;
 
 

@@ -16,7 +16,7 @@
         <a class="nav-link" href="#"><?php echo lang('ITEMS') ?></a>
       </li>
 <li class="nav-item">
-        <a class="nav-link" href="#"><?php echo lang('MEMBERS') ?></a>
+        <a class="nav-link" href="members.php"><?php echo lang('MEMBERS') ?></a>
       </li>
 <li class="nav-item">
         <a class="nav-link" href="#"><?php echo lang('STATISTICS') ?></a>
@@ -25,7 +25,7 @@
         <a class="nav-link" href="#"><?php echo lang('LOGS') ?></a>
       </li>
 </ul>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" style="list-style-type: none;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown
         </a>
