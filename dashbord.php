@@ -1,5 +1,4 @@
 <?php
-	
 session_start();
 
 if (isset($_SESSION['username'])){
@@ -9,6 +8,7 @@ if (isset($_SESSION['username'])){
    include 'int.php';
 
    include $tpl . 'footer.php' ;
+    echo 'Welcom to index';
 
 
           } else {

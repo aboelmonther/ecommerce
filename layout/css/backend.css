@@ -51,7 +51,7 @@ start login form
 	font-size:1em;
 }
 .dropdown-menu{
-	background-color: #1abc9c;
+	background-color: #bbbbbb;
 	box-shadow:0 6px 12px rgb(93, 87, 156);
 
 }
@@ -77,6 +77,13 @@ h1 {
 	position: absolute;
 	top: 10px;
 	right: -8px;
+}
+.main-table{
+	-webkit-box-shadow: 0 3px 10px #757373;
+}
+.man-table td {
+	background-color: #2a2c2d;
+	vertical-align: middle !important;
 }
 .main-table tr:first-child td {/* You Can Use Thead */
 	background-color: #333;

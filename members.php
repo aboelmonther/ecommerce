@@ -54,8 +54,8 @@ if (isset($_SESSION['username'])){
                         echo "<td> </td>";
                         echo "<td>
                                                  <!-- Edit -->
-                              <a href='members.php?do=Edit&userid= " . $row['useriD'] . " 'class='btn btn-success'>Edit</a>
-                              <a href='members.php?do=Delete&userid= " . $row['useriD'] . " ' class='btn btn-danger confirm'>Delete</a>
+                              <a href='members.php?do=Edit&userid= " . $row['useriD'] . " 'class='btn btn-success'> <i class='fa fa-edit'></i> Edit</a>
+                              <a href='members.php?do=Delete&userid= " . $row['useriD'] . " 'class='btn btn-danger confirm'> <i class='far fa-closed-captioning'></i> Delete</a>
                               </td>";
 
                 echo "</tr>";
@@ -67,7 +67,7 @@ if (isset($_SESSION['username'])){
 
                </table>
            </div>
-           <a href= "members.php?do=Add" class="btn btn-primary"><i class="fa fa-plus"></i>Add New Member</a>
+           <a href= "members.php?do=Add" class="btn btn-primary"><i class="fa fa-plus"></i> New Member</a>
 
        </div>
 
@@ -208,38 +208,52 @@ if (isset($_SESSION['username'])){
 
            // Loop Into Errors Arry And Echo It
 
-           {}                     foreach ($formErrors as $error){
+                                foreach ($formErrors as $error){
 
                echo  '<div class = "alert alert-danger">' . $error . '</div>';
            }
 
            // Check If Ther no Error Proceed The Update Operation
 
-           if (empty($formErrors)){
+           if (empty($formErrors)) {
 
+               // Check If User Exist in Database
 
+               $check = checkItem("username", "users", $user);
 
-               // Insert Userinfo Database
+               if ($check == 1){
 
-             $stmt = $con->prepare("INSERT INTO users(username, password, Email, FullName)  
-                                             VALUES(:zuser, :zpass, :zmail, :zname)");
-             $stmt->execute(array(
-                     
-                     'zuser' => $user,
-                     'zpass' => $hashPass,
-                     'zmail' => $email,
-                     'zname' => $name
+                   echo "<div class=\"alert alert-danger\" role=\"alert\">" . 'Sorry This User Is Exist';
 
-             ));
-                
-               // Echo Success Message
+               } else {
+                   // Insert Userinfo Database
 
-               echo "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Inserted</div>';
+                   $stmt = $con->prepare("INSERT INTO users(username, password, Email, FullName)  
+
+                                             VALUES(:zuser, :zpass, :zmail, :zname) ");
+                   $stmt->execute(array(
+
+                       'zuser' => $user,
+                       'zpass' => $hashPass,
+                       'zmail' => $email,
+                       'zname' => $name
+
+                   ));
+
+                   // Echo Success Message
+
+                   echo "<div class = 'alert alert-success'>" . $stmt->rowCount() . 'Record Inserted</div>';
+               }
            }
 
        }else{
 
-           echo 'Sorry You Cant Browse This Page Directly';
+           // Home Redirect function this function accept parameters
+
+           $errorMsg =  'Sorry You Cant Browse This Page Directly';
+
+           redirectHome($errorMsg);
+
 
        }
 
@@ -443,13 +457,46 @@ if (isset($_SESSION['username'])){
 
                  echo "</div>";
 
-     } elseif ($do == 'Delete'){
+     } elseif ($do == 'Delete'){ // Delete Member Page
 
-       // Delete Member Page
+      echo "<h1 class='text-center'>Manage Members</h1>";
+      echo" <div class='container'>";
 
-       echo 'Welcom To Delete Page';
+        $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+
+        // Check If The User Exist In Database
+
+        // select all data depend on this id
+
+        $stmt = $con->prepare("SELECT  * FROM users WHERE UserID = ? LIMIT 1 ");
+
+        // execute Query
+
+        $stmt->execute(array($userid));
 
 
+        //  the row count
+        $count = $stmt->rowCount();
+
+        // if ther's such id show the form
+
+        if (  $stmt->rowCount() > 0 ) {
+
+            $stmt = $con->prepare("DELETE FROM users WHERE UserID = :zuser");
+
+            $stmt->bindParam(":zuser",$userid);
+
+            $stmt->execute();
+
+
+            echo "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Delete</div>';
+
+        }  else{
+
+            echo 'This ID is Not Exist';
+}
+
+      echo '</div>';
    }
 
 
