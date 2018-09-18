@@ -19,18 +19,40 @@ function getTitle(){
 }
 
 /**
- * Home Redirect function v1.0
+ * Home Redirect function v2.0
  * this function accept parameters
- * $errorMsg = echo the error message
+ * $theMsg = echo The message [ Error | Success | Warning]
+ * $url  = The Link You Want To Redirecting To
  * $seconds = seconds before redirecting
  **/
 
-function redirectHome($errorMsg, $seconds = 3){
-    echo "<div class= 'alert alert-danger'>$errorMsg</div>";
+function redirectHome($theMsg, $url = null, $seconds = 3){
 
-    echo "<div class='alert alert-info'>You Will Be Redirected To Homepage After $seconds seconds.</div>";
+    if ( $url === null){
 
-    header("refresh:$seconds;url=index.php");
+        $url = 'index.php';
+
+        $link = 'Homepage';
+
+    }else{
+
+        if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== ''){
+
+            $url = $_SERVER['HTTP_REFERER'];
+            $link = 'Previous Page';
+
+        }else{
+            $url = 'index.php';
+            $link = 'Homepage';
+
+        }
+    }
+
+    echo $theMsg;
+
+    echo "<div class='alert alert-info'>You Will Be Redirected To $link After $seconds seconds.</div>";
+
+    header("refresh:$seconds;url=$url");
 
     exit();
 }
@@ -53,4 +75,21 @@ function checkItem ($select, $from, $value){
 
     return $count;
 
+}
+/*
+ **Count Number of Items function v1.0
+ **Function TO Count Number Of Items Rows
+ **$item = The Item To Count
+ **$table = The Table To Choose From
+ **
+ **/
+function countItems($item, $table){
+
+    global $con;
+
+    $stmt2 = $con->prepare("SELECT COUNT($item) FROM $table");
+
+    $stmt2->execute();
+
+    return $stmt2->fetchColumn();
 }

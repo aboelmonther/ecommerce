@@ -60,9 +60,47 @@ start login form
 .form-control {
 	position: relative;
 }
-/* End BootStrab Edits*/
+/* End Bootstrab Edits*/
+
+/* Start Dashbord Edits*/
+.home-stats .stat{
+	padding: 20px;
+	font-size: 15px;
+	color: #fff;
+	border-radius: 10px;
 
 }
+.home-stats .stat a{
+	color: #fff;
+}
+.home-stats .stat a:hover{
+	text-decoration: none;
+}
+
+.home-stats .st-members{
+	background-color: #3498db;
+}
+.home-stats .st-pending{
+	background-color:#7f8c8d ;
+}
+.home-stats .st-items{
+	background-color:#2ecc71 ;
+}
+.home-stats .st-comments{
+	background-color: #f9ca24;
+}
+.home-stats .stat span {
+	display: block;
+	font-size: 60px;
+}
+.latest{
+	margin-top: 30px;
+}
+
+
+/*End Dashbord Edits*/
+
+
    /* Start Members Page*/
 
 
@@ -88,6 +126,9 @@ h1 {
 .main-table tr:first-child td {/* You Can Use Thead */
 	background-color: #333;
 	color:#fff;
+}
+.activate{
+	margin-left: 5px ;
 }
 
    /* End Members Page*/

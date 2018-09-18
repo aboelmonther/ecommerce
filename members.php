@@ -19,8 +19,14 @@ if (isset($_SESSION['username'])){
 
    if ($do == 'Manage') { // Manage Members Page
 
+        $query = '';
+
+        if (isset($_GET['page']) && $_GET['page'] == 'Pending'){
+
+            $query = 'AND RegStatus = 0';
+       }
     // Select All Users Except Admin
-       $stmt = $con->prepare("SELECT * FROM users WHERE GroupiD !=1 ");
+       $stmt = $con->prepare("SELECT * FROM users WHERE GroupiD != 1 $query ");
 
        // Execute The Statement
 
@@ -51,12 +57,17 @@ if (isset($_SESSION['username'])){
                         echo "<td>" . $row['username'] . "</td>";
                         echo "<td>" . $row['Email'] . "</td>";
                         echo "<td>" . $row['FullName'] . "</td>";
-                        echo "<td> </td>";
+                        echo "<td>" . $row['date'] . "</td>";
                         echo "<td>
                                                  <!-- Edit -->
                               <a href='members.php?do=Edit&userid= " . $row['useriD'] . " 'class='btn btn-success'> <i class='fa fa-edit'></i> Edit</a>
-                              <a href='members.php?do=Delete&userid= " . $row['useriD'] . " 'class='btn btn-danger confirm'> <i class='far fa-closed-captioning'></i> Delete</a>
-                              </td>";
+                              <a href='members.php?do=Delete&userid= " . $row['useriD'] . " 'class='btn btn-danger confirm'> <i class='far fa-closed-captioning'></i> Delete </a>";
+
+                                if ($row['RegStatus'] == 0){
+
+                                   echo "<a href='members.php?do=Delete&userid= " . $row['useriD'] . " 'class='btn btn-info activate'> <i class='far fa-closed-captioning'></i> Activate</a>";
+                                }
+                              echo"</td>";
 
                 echo "</tr>";
 
@@ -223,14 +234,16 @@ if (isset($_SESSION['username'])){
 
                if ($check == 1){
 
-                   echo "<div class=\"alert alert-danger\" role=\"alert\">" . 'Sorry This User Is Exist';
+                   $theMsg = '<div class="alert alert-danger">Sorry This User Is Exist</div>';
+
+                   redirectHome($theMsg, 'back');
 
                } else {
                    // Insert Userinfo Database
 
-                   $stmt = $con->prepare("INSERT INTO users(username, password, Email, FullName)  
+                   $stmt = $con->prepare("INSERT INTO users(username, password, Email, FullName, RegStatus, Date)  
 
-                                             VALUES(:zuser, :zpass, :zmail, :zname) ");
+                                             VALUES(:zuser, :zpass, :zmail, :zname, 1, now()) ");
                    $stmt->execute(array(
 
                        'zuser' => $user,
@@ -242,19 +255,24 @@ if (isset($_SESSION['username'])){
 
                    // Echo Success Message
 
-                   echo "<div class = 'alert alert-success'>" . $stmt->rowCount() . 'Record Inserted</div>';
+                   $theMsg = "<div class = 'alert alert-success'>" . $stmt->rowCount() . 'Record Inserted</div>';
+
+                   redirectHome($theMsg, 'back', 4);
+
                }
            }
 
        }else{
 
+           echo "<div class='container'>";
+
            // Home Redirect function this function accept parameters
 
-           $errorMsg =  'Sorry You Cant Browse This Page Directly';
+           $theMsg =  '<div class = "alert alert-danger"> .  Sorry You Cant Browse This Page Directly</div>';
 
-           redirectHome($errorMsg);
+           redirectHome($theMsg, 'back', 4);
 
-
+           echo "</div>";
        }
 
        echo "</div>";
@@ -291,7 +309,7 @@ if (isset($_SESSION['username'])){
 
        // if ther's such id show the form
 
-        if (  $stmt->rowCount() > 0 ){    ?>
+        if (  $Count > 0 ){    ?>
 
              <h1 class="text-center">Edit Member</h1>
 
@@ -300,7 +318,7 @@ if (isset($_SESSION['username'])){
                 <form class="form-horizontal" action="?do=Update" method="POST">
                   <input type="hidden" name="userid" value="<?php echo $userid ?>"/>
 
-                  <!-- Start username field-->
+                  <!-- Start username field-- >
 
                   <div class="form-group form-group-lg">
                     <label class="col-sm-2 control-label">Username</label>
@@ -368,7 +386,13 @@ if (isset($_SESSION['username'])){
 
            } else {
 
-            echo ' Theres  No ID';
+            echo"<div class='container'>";
+
+            $theMsg =  '<div class="alert alert-danger"> Theres  No Such ID</div>';
+
+            redirectHome($theMsg);
+
+            echo "</div>";
            }
      } elseif ($do == 'Update') { //  Update Page
 
@@ -446,12 +470,16 @@ if (isset($_SESSION['username'])){
 
                              // Echo Success Message
 
-                             echo "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Updated</div>';
+                             $theMsg =  "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Updated</div>';
+
+                             redirectHome($theMsg, 'back', 4);
                          }
 
                       }else{
 
-                             echo 'Sorry You Cant Browse This Page Directly';
+                             $theMsg =  '<div class = "alert alert-danger"> Sorry You Cant Browse This Page Directly</div>';
+
+                             redirectHome($theMsg);
 
                  }
 
@@ -468,19 +496,15 @@ if (isset($_SESSION['username'])){
 
         // select all data depend on this id
 
-        $stmt = $con->prepare("SELECT  * FROM users WHERE UserID = ? LIMIT 1 ");
+       // $stmt = $con->prepare("SELECT  * FROM users WHERE UserID = ? LIMIT 1 ");
 
-        // execute Query
-
-        $stmt->execute(array($userid));
+      $check = checkItem ('userid', 'users', $userid);
 
 
-        //  the row count
-        $count = $stmt->rowCount();
 
         // if ther's such id show the form
 
-        if (  $stmt->rowCount() > 0 ) {
+        if (  $check > 0 ) {
 
             $stmt = $con->prepare("DELETE FROM users WHERE UserID = :zuser");
 
@@ -489,11 +513,15 @@ if (isset($_SESSION['username'])){
             $stmt->execute();
 
 
-            echo "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Delete</div>';
+            $theMsg = "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Delete</div>';
+
+            redirectHome($theMsg);
 
         }  else{
 
-            echo 'This ID is Not Exist';
+            $theMsg =  '<div class = "alert alert-danger">This ID is Not Exist</div>';
+
+            redirectHome($theMsg);
 }
 
       echo '</div>';
