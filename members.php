@@ -65,7 +65,7 @@ if (isset($_SESSION['username'])){
 
                                 if ($row['RegStatus'] == 0){
 
-                                   echo "<a href='members.php?do=Delete&userid= " . $row['useriD'] . " 'class='btn btn-info activate'> <i class='far fa-closed-captioning'></i> Activate</a>";
+                                   echo "<a href='members.php?do=Activate&userid= " . $row['useriD'] . " 'class='btn btn-info activate'> <i class='far fa-closed-captioning'></i> Activate</a>";
                                 }
                               echo"</td>";
 
@@ -309,7 +309,7 @@ if (isset($_SESSION['username'])){
 
        // if ther's such id show the form
 
-        if (  $Count > 0 ){    ?>
+        if (  $count > 0 ){    ?>
 
              <h1 class="text-center">Edit Member</h1>
 
@@ -525,7 +525,45 @@ if (isset($_SESSION['username'])){
 }
 
       echo '</div>';
-   }
+   } elseif ($do == 'Activate') {
+
+       echo "<h1 class='text-center'>Activate Member</h1>";
+       echo" <div class='container'>";
+
+       $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+
+       // Check If The User Exist In Database
+
+       // select all data depend on this id
+
+       // $stmt = $con->prepare("SELECT  * FROM users WHERE UserID = ? LIMIT 1 ");
+
+       $check = checkItem ('userid', 'users', $userid);
+
+
+
+       // if ther's such id show the form
+
+       if (  $check > 0 ) {
+
+           $stmt = $con->prepare("UPDATE users SET RegStatus = 1 WHERE useriD = ?");
+
+
+           $stmt->execute(array($userid));
+
+
+           $theMsg = "<div class = 'alert alert-success'>" .  $stmt->rowCount() . 'Record Activate</div>';
+
+           redirectHome($theMsg);
+
+       }  else{
+
+           $theMsg =  '<div class = "alert alert-danger">This ID is Not Exist</div>';
+
+           redirectHome($theMsg);
+       }
+
+       echo '</div>';   }
 
 
    include $tpl . 'footer.php' ;

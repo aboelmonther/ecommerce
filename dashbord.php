@@ -1,4 +1,5 @@
 <?php
+ob_start();// Output Buffering Start
 session_start();
 
 if (isset($_SESSION['username'])){
@@ -8,6 +9,9 @@ if (isset($_SESSION['username'])){
    include 'int.php';
    /* start Dashboard Page*/
 
+    $latestusers = 5 ; // Number Of Latest Users
+
+    $thelatest = getLatest("*","users","useriD", $latestusers);// Latest User Array
 
     ?>
     <div class="home-stats">
@@ -23,7 +27,7 @@ if (isset($_SESSION['username'])){
                 <div class="col-md-3">
                     <div class="stat st-pending">
                         Pending Members
-                        <span><a href="members.php?do=Manage&page=Pending">25</a></span>
+                        <span><a href="members.php?do=Manage&page=Pending"><?php echo checkItem("Regstatus", "users", 0)?></a></span>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -46,17 +50,38 @@ if (isset($_SESSION['username'])){
           <div class="container ">
               <div class="row">
                   <div class="col-sm-6">
-                      <div class="panel panel-defult">
+
+                      <div class="panel panel-defualt">
                           <div class="panel-heading">
-                              <i class="fa fa-users"></i>Latest Register Usesrs
+                              <i class="fa fa-users"></i> Latest <?php echo $latestusers ?> Register Users
                           </div>
                           <div class="panel-body">
-                              Test
+                              <ul class="list-unstyled latest-users">
+                                      <?php
+
+                                      foreach ($thelatest as $user) {
+
+                                          echo '<li>';
+                                              echo $user['username'];
+                                              echo '<a href="members.php?do=Edit&userid= '. $user['useriD'] . '">';
+                                              echo '<span class="btn btn-success pull-right">';
+                                                   echo '<i class="fa fa-edit"></i> Edit';
+                                          if ($user['RegStatus'] == 0){
+
+                                              echo "<a href='members.php?do=Activate&userid= " . $user['useriD'] . " 'class='btn btn-info pull-right activate'> <i class='far fa-closed-captioning'></i> Activate</a>";
+                                          }
+
+                                              echo '</span>';
+                                              echo'</a>';
+                                          echo '</li>';
+                                          }
+                                      ?>
+                              </ul>
                           </div>
                       </div>
                   </div>
                   <div class="col-sm-6">
-                      <div class="panel panel-defult">
+                      <div class="panel panel-defualt">
                           <div class="panel-heading">
                               <i class="fa fa-tag"></i>Latest Items
                           </div>
@@ -65,6 +90,7 @@ if (isset($_SESSION['username'])){
                           </div>
                       </div>
                   </div>
+
               </div>
           </div>
     </div>
@@ -85,5 +111,6 @@ if (isset($_SESSION['username'])){
 
           }
 
+ob_end_flush();
 
-
+?>
