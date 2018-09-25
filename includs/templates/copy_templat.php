@@ -22,7 +22,7 @@ if (isset($_SESSION['username'])){
 
     } elseif ($do == 'Edit'){
 
-    } elseif ($do == 'Ubdate'){
+    } elseif ($do == 'Update'){
 
     } elseif ($do == 'Delete'){
 

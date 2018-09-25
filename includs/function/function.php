@@ -60,7 +60,7 @@ function redirectHome($theMsg, $url = null, $seconds = 3){
 /*
  * Check Items Function v1.0
  * function to Check Items In Database [ Function Accept Parameters ]
- * $select = The item To Selcet [Example: user, item, categories ]
+ * $select = The item To SELECT [Example: user, item, categories ]
  * $Form = the Table To Select from [ Example: users, items, categories ]
  * $value = he Value Of Select [ Example:     monther, Box , Electronics ]
  * */

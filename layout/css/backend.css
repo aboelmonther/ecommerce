@@ -147,3 +147,102 @@ h1 {
 }
 
    /* End Members Page*/
+
+/*Start categories*/
+.categories .panel-heading {
+    color:#959595;
+    font-weight: bold;
+}
+.categories .panel-body {
+    padding: 0;
+}
+.categories .option a {
+    color:#888;
+    text-decoration: none;
+}
+.categories .option .active{
+    color:#f00;
+    font-weight: bold;
+}
+
+.categories .option span{
+    color:#888;
+    cursor: pointer;
+}
+.categories hr {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.categories .cat {
+    padding: 15px;
+    position: relative;
+}
+.categories .cat:hover .hidden-buttons{
+    right: 10px;
+}
+.categories .cat:hover {
+    background-color: #eee;
+}
+.categories .cat .hidden-buttons {
+    -webkit-transition:all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    transition:all .5s ease-in-out;
+     position: absolute;
+    top:15px;
+    right: -120px;
+}
+.categories .cat .hidden-buttons a {
+
+    margin-right: 5px;
+}
+
+.categories .cat h3 {
+	margin: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color:#6a6a6a;
+
+}
+.categories .cat .full-view p {
+    margin: 10px 0;
+    color: #707070;
+}
+.categories .cat:last-of-type ~ hr {
+	display: none;
+}
+hr {
+
+    border-top: 2px dashed rgba(0,0,0,.1);
+}
+
+ .categories .cat .Visibility {
+	color: #DE0009;
+	padding: 4px 6px;
+	margin-right: 6px;
+	border-radius: 6px;font-weight: bold;
+
+
+ }
+.categories .cat .commenting {
+    color:#d2dae2;
+    padding: 4px 6px;
+    margin-right: 6px;
+    border-radius: 6px;
+    font-weight: bold;
+
+}
+.categories .cat .advertises {
+    color: #2ecc71;
+    padding: 4px 6px;
+    margin-right: 6px;
+    border-radius: 6px;
+    font-weight: bold;
+
+}
+.categories .add-category{
+	margin-bottom: 30px;
+}
+
+
+
+/*End categories*/

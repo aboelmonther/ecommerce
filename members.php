@@ -270,7 +270,7 @@ if (isset($_SESSION['username'])){
 
            $theMsg =  '<div class = "alert alert-danger"> .  Sorry You Cant Browse This Page Directly</div>';
 
-           redirectHome($theMsg, 'back', 4);
+           redirectHome($theMsg);
 
            echo "</div>";
        }
@@ -487,7 +487,7 @@ if (isset($_SESSION['username'])){
 
      } elseif ($do == 'Delete'){ // Delete Member Page
 
-      echo "<h1 class='text-center'>Manage Members</h1>";
+      echo "<h1 class='text-center'>Delete Members</h1>";
       echo" <div class='container'>";
 
         $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
