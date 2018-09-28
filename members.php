@@ -280,7 +280,8 @@ if (isset($_SESSION['username'])){
 
 
 
-   }elseif ($do == 'Edit') {// Edit Page
+   }
+   elseif ($do == 'Edit') {// Edit Page
 
       //Data protection
       // if (isset($_GET['userid']) && is_numeric($_GET['userid'])) {

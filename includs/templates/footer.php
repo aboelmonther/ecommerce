@@ -11,7 +11,6 @@
   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
   crossorigin="anonymous"></script>
 
-  <script src="jquery-ui.min.js"></script>
 
   <!--  File Modification --- / js / jQ -->
 

@@ -7,6 +7,7 @@
  		'CATEGORIES'     =>  'categories',
  		'ITEMS'          =>  'items',
  		'MEMBERS'        =>  'members',
+        'COMMENTS'       =>  'comments',
  		'STATISTICS'     =>  'statistics',
  		'LOGS'           =>  'logs'
 

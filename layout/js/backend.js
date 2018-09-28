@@ -3,11 +3,20 @@ $(function(){
 'use strict';
 
 // Trigger The Select box
+    
+    // Dashboard
+    $('.toggle-info').click(function () {
 
-    $("select").selectBoxIt({
+        $(this).toggleClass('selected').parent().next('.panel-body').fadeToggle(100);
 
-        // Uses the jQueryUI theme for the drop down
+        if ($(this).hasClass('selected')){
 
+            $(this).html('<i class="fa fa-minus fa-lg"></i> ');
+        }else{
+
+            $(this).html('<i class="fa fa-plus fa-lg"></i> ');
+
+        }
     });
 
 //Hide placeholder On Form Focus

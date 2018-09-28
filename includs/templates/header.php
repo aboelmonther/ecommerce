@@ -15,8 +15,7 @@
     
 
         <!-- File Modification (css) -->
-       <link rel="stylesheet" href="jquery-ui.css"/>
-       <link rel="stylesheet" href="jquery.selectBoxIt.css"/>
+
 
 
        <link rel="stylesheet" href="layout/css/backend.css"/>
